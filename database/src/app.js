@@ -1,6 +1,6 @@
 require('dotenv').config();
 const express = require('express');
-const sequelize = require('./database/src/config/database');
+const sequelize = require('./config/database');
 
 const app = express();
 const PORT = process.env.PORT || 3000;
@@ -10,7 +10,7 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
 // Importar rotas
-const routes = require('./database/src/routes');
+const routes = require('./routes');
 app.use('/api', routes);
 
 // Rota de teste
@@ -26,9 +26,6 @@ const startServer = async () => {
   try {
     await sequelize.authenticate();
     console.log('✅ Conexão com MySQL estabelecida com sucesso!');
-    
-    await sequelize.sync({ alter: true });
-    console.log('✅ Banco de dados sincronizado com sucesso!');
     
     app.listen(PORT, () => {
       console.log(`🚀 Servidor rodando na porta ${PORT}`);
