@@ -1,16 +1,29 @@
 require('dotenv').config();
 const express = require('express');
-const sequelize = require('./database/src/config/database');
+const sequelize = require('./src/config/database');
 
 const app = express();
 const PORT = process.env.PORT || 3000;
+
+// CORS - Permitir requisições do Angular
+app.use((req, res, next) => {
+  res.header('Access-Control-Allow-Origin', 'http://localhost:4200');
+  res.header('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, OPTIONS');
+  res.header('Access-Control-Allow-Headers', 'Content-Type, Authorization');
+  res.header('Access-Control-Allow-Credentials', 'true');
+  
+  if (req.method === 'OPTIONS') {
+    return res.sendStatus(200);
+  }
+  next();
+});
 
 // Middleware
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
 // Importar rotas
-const routes = require('./database/src/routes');
+const routes = require('./src/routes');
 app.use('/api', routes);
 
 // Rota de teste

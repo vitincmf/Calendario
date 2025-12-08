@@ -1,0 +1,43 @@
+<div id="caixa-principal" class="d-flex flex-column justify-content-center align-items-center gap-5 p-4">
+    <div id="logo">
+        <img src="../../assets/epis-texto.svg" alt="logo-epis">
+    </div>
+
+    <div id="register-box" class="d-flex flex-column gap-2 align-items-start justify-content-center p-5">
+        <header class="w-100 mb-5">
+            <h3>Cadastro</h3>
+        </header>
+        <div *ngIf="registerError" class="alert alert-danger w-100">{{ registerError }}</div>
+        <div *ngIf="registerSuccess" class="alert alert-success w-100">{{ registerSuccess }}</div>
+        <form [formGroup]="registerForm" (ngSubmit)="registrar()" class="w-100 d-flex flex-column gap-2">
+            <label class="w-100"><h6>Nome Completo</h6></label>
+            <input type="text" class="w-100" formControlName="nome">
+            <div *ngIf="registerForm.get('nome')?.invalid && registerForm.get('nome')?.touched" class="text-danger small">Mínimo 3 caracteres</div>
+
+            <label class="w-100 mt-2"><h6>Email</h6></label>
+            <input type="email" class="w-100" formControlName="email">
+            <div *ngIf="registerForm.get('email')?.invalid && registerForm.get('email')?.touched" class="text-danger small">Email inválido</div>
+
+            <label class="w-100 mt-2"><h6>Cargo</h6></label>
+            <select class="w-100" formControlName="cargo">
+                <option value="Aluno">Aluno</option>
+                <option value="Professor">Professor</option>
+                <option value="Coordenador">Coordenador</option>
+            </select>
+
+            <label class="w-100 mt-2"><h6>Senha</h6></label>
+            <input type="password" class="w-100" formControlName="senha">
+            <div *ngIf="registerForm.get('senha')?.invalid && registerForm.get('senha')?.touched" class="text-danger small">Mínimo 6 caracteres</div>
+
+            <label class="w-100 mt-2"><h6>Confirmar Senha</h6></label>
+            <input type="password" class="w-100" formControlName="confirmSenha">
+            <div *ngIf="registerForm.get('confirmSenha')?.invalid && registerForm.get('confirmSenha')?.touched" class="text-danger small">Confirmação obrigatória</div>
+
+            <button type="submit" [disabled]="registerForm.invalid || isLoading" class="btn btn-primary w-100 epis-btn mt-2">
+              {{ isLoading ? 'Criando conta...' : 'Cadastrar' }}
+            </button>
+        </form>
+
+        <span class="text-center w-100">Já tem conta? <a (click)="voltar()" style="cursor: pointer; color: #0056b3;" class="text-decoration-none">Fazer Login</a></span>
+    </div>
+</div>

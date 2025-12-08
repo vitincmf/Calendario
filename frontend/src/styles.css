@@ -1,0 +1,64 @@
+/* You can add global styles to this file, and also import other style files */
+
+body {
+    --bg-color: #1A1A1A;
+    --text-color: #fff ; 
+    --calendar-button: #0B1EFE ;
+    --calendar-button-selected: #0717c5;
+    --calendar-button-text: white;
+    --blue-textColor: #0B1EFE;
+    --day-number-color: white;
+    --bg-day-today-color: #2f3d66;
+    --event-color: none;
+    --event-bg-color: none;
+    font-family: "Montserrat", sans-serif !important;
+}
+
+/* Modo de alto contraste */
+body.high-contrast {
+    --blue-textColor: #000;
+    --text-color: #000 ;
+    /* texto preto */
+    --calendar-button: white;
+    --calendar-button-selected: #bbbbbb;
+    --calendar-button-text: #000;
+    --blue-textColor: #000;
+    --day-number-color: white;
+    --bg-day-today-color: #5f5f5f;
+    --event-color: white;
+    --event-bg-color: #383838;
+
+}
+
+
+h1, h2, h3, h4, h5, h6, h7, h8, h9{
+    font-family: "PT Serif Caption", serif !important;
+}
+
+.epis-btn{
+    background-color: var(--calendar-button) !important;
+    color: var(--text-color) !important;
+    font-family: "Montserrat", sans-serif !important;
+}
+
+a{
+    font-family: "Montserrat", sans-serif !important;
+    color: #2C3AD5 !important;
+    font-size: 1em !important;
+    font-weight: 600;
+}
+
+a:hover{
+    cursor: pointer;
+}
+
+input{
+    height: 48px !important;
+    font-family: "Montserrat", sans-serif !important;
+    vertical-align: middle !important;
+    padding: 8px;
+    border: 1px solid rgba(0, 0, 0, 0.459) !important;
+
+}
+html, body { height: 100%; }
+body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }

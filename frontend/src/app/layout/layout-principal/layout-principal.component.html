@@ -1,0 +1,14 @@
+<div id="caixa-principal">
+    <header class="d-flex justify-content-center align-items-center p-4">
+        <div id="logo">
+            <img src="assets/images/episTexto.svg" alt="Logo" width="100">
+            <img src="assets/images/episLogo.svg" alt="Logo" width="100">
+        </div>
+        <div id="nav-buttons" class="d-flex align-items-center">
+            <app-accessibility-button (contrastToggle)="toggleContrast($event)">
+            </app-accessibility-button>
+            <img class="calendar-header-item" src="assets/images/perfil.svg" alt="perfil" width="40" height="60">
+        </div>
+    </header>
+    <router-outlet></router-outlet>
+</div>

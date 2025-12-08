@@ -1,0 +1,15 @@
+
+<img class="accessibility-img"  (click)="toggleBox()" src="assets/images/acessibilidade.svg" alt="acessibilidade" width="60" height="60">
+<div class="accessibility-box" *ngIf="isOpen">
+  <div class="accessibility-box-item">
+    <p class="accessibility-box-text">Alto contraste</p>
+    <label class="switch">
+     <input 
+      type="checkbox" 
+      [checked]="isContrastOn"
+      (change)="onToggleContrast($event)"
+         />
+    <span class="slider"></span>
+  </label>
+   </div>
+</div>

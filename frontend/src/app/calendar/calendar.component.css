@@ -1,0 +1,289 @@
+.calendar-page {
+  padding: 10px;
+  width: 100%;
+  height: 100%;
+  background-color: var(--bg-color);
+  color: var(--text-color);
+}
+
+.calendar-itens {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 1rem;
+}
+
+.calendar-header {
+  display: flex;
+  width: 90%;
+  align-items: center;
+  justify-content: center;
+  gap: 1rem;
+}
+
+.calendar-header-item {
+  cursor: pointer;
+}
+
+/* Aplica a todos os botões da toolbar */
+:host ::ng-deep .fc .fc-toolbar button {
+  background-color: var(--calendar-button);
+  /* cor de fundo */
+  color: var(--calendar-button-text);
+  /* cor do texto */
+  border: none;
+  /* remove borda padrão */
+  padding: 0.5rem 1rem;
+  /* espaçamento interno */
+  border-radius: 5px;
+  /* cantos arredondados */
+  font-weight: bold;
+  cursor: pointer;
+}
+
+/* Botão ao passar o mouse */
+:host ::ng-deep .fc .fc-toolbar button:hover {
+  background-color: var(--calendar-button-selected);
+}
+
+/* Botão ativo (por exemplo, a view selecionada) */
+:host ::ng-deep .fc .fc-toolbar button.fc-button-active {
+  background-color: var(--calendar-button-selected);
+  color: var(--calendar-button-text);
+}
+
+.calendar-main {
+  width: 90%;
+  max-width: 150rem;
+  /* ocupa toda largura do pai */
+  margin: 0 auto;
+  /* centraliza horizontalmente */
+  height: 90%;
+  max-height: 100vw;
+  background-color: var(--bg-color);
+  color: var(--text-color);
+}
+
+.calendar-main ::ng-deep .fc-timeGridWeek .fc-timegrid-body,
+.calendar-main ::ng-deep .fc-timeGridDay .fc-timegrid-body {
+  overflow-y: hidden !important;
+}
+
+.calendar-main ::ng-deep .fc .fc-scroller-liquid-absolute {
+  position: inherit;
+}
+
+.calendar-main ::ng-deep .fc {
+  font-family: 'Inter', sans-serif;
+  font-size: 1rem;
+  /* base para todo o calendário */
+}
+
+.calendar-main ::ng-deep .fc-toolbar {
+  background-color: #1A1A1A;
+  /* fundo da barra de navegação */
+  color: white;
+  /* texto da barra */
+  border-radius: 10px 10px 0 0;
+}
+
+.calendar-main ::ng-deep .fc-toolbar-title {
+  color: white;
+  /* título do mês */
+}
+
+.calendar-main ::ng-deep .fc-col-header-cell {
+  background-color: #e0e0e0;
+  color: var(--blue-textColor);
+  /* cor do texto */
+  font-weight: bold;
+  font-size: 1.5rem;
+  /* tamanho da fonte */
+  font-family: 'Inter', sans-serif;
+  /* fonte */
+  height: 60px;
+  /* altura da célula */
+  line-height: 60px;
+  /* centraliza verticalmente o texto */
+  padding: 0;
+  /* remove padding interno que pode atrapalhar */
+  text-align: center;
+  /* centraliza horizontalmente */
+}
+
+.calendar-main ::ng-deep .fc-daygrid-day {
+  height: 2rem;
+  /* altura da célula do dia */
+}
+
+.calendar-main ::ng-deep .fc-daygrid-day-number {
+  font-size: 1.2rem;
+  /* tamanho do número do dia */
+  font-family: 'Inter', sans-serif;
+  color: var(--day-number-color);
+  text-decoration: none;
+}
+
+.calendar-main ::ng-deep .fc-daygrid-day-number a {
+  text-decoration: none;
+  /* remove underline */
+  color: inherit;
+  /* mantém a cor definida */
+  cursor: default;
+  /* opcional: remove cursor de link */
+}
+
+.calendar-main ::ng-deep .fc-col-header-cell a {
+  text-decoration: none;
+  /* remove underline */
+  color: inherit;
+  cursor: default;
+}
+
+.calendar-main ::ng-deep .fc-day-today {
+  background-color: var(--bg-day-today-color);
+  /* cor de fundo desejada */
+  border-radius: 6px;
+  color: white;
+}
+
+.calendar-main ::ng-deep .fc-daygrid-event-dot {
+  border-color: var(--event-color) !important;
+  /* cor do círculo */
+  background-color: var(--event-color) !important;
+}
+
+.calendar-main ::ng-deep .fc-event-title,
+.calendar-main ::ng-deep .fc-event-time {
+  color: var(--event-color) !important;
+  /* cor da fonte */
+}
+
+.calendar-main ::ng-deep .fc-timegrid-event .fc-event-main {
+  background-color: var(--event-bg-color) !important;
+  color: white !important;
+  /* texto da caixa de evento */
+  border: var(--event-bg-color);
+}
+
+.calendar-main ::ng-deep .fc-v-event {
+  border: var(--event-bg-color);
+}
+
+:host ::ng-deep .fc-timegrid-slot-label-cushion {
+  color: white !important;
+  font-size: 1.5rem;
+  text-align: center;
+  font-family: 'Montserrat', sans-serif;
+}
+
+:host ::ng-deep .fc-timegrid-slot-label-cushion {
+  padding: 1rem;
+}
+
+:host ::ng-deep .fc-timegrid-axis {
+  width: 5rem !important;
+  /* ajuste aqui */
+
+}
+
+/* frame interno da coluna da hora */
+:host ::ng-deep .fc-timegrid-axis-frame {}
+
+/*MODAL*/
+
+.btn-add-event {
+  padding: 10px 20px;
+  background: #0B1EFE;
+  color: white;
+  border-radius: 5px;
+  border: none;
+  cursor: pointer;
+  margin-bottom: 15px;
+}
+
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 1000;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.modal {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background: white;
+  padding: 25px;
+  border-radius: 10px;
+  width: 40%;
+  max-width: 30vw;
+  height: 68%;
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+
+.modal input {
+  padding: 8px;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+}
+
+.modal-title {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.modal-text {
+  color: black;
+
+}
+
+.modal-section {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.modal-item {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 1rem;
+}
+
+.modal-actions {
+  display: flex;
+  justify-content: space-between;
+  margin-top: auto;
+
+}
+
+.btn-cancel {
+  background: gray;
+  color: white;
+  padding: 8px 15px;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+}
+
+.btn-save {
+  background: #0B1EFE;
+  color: white;
+  padding: 8px 15px;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+}

@@ -1,0 +1,67 @@
+<div class="event-view-modal__overlay" *ngIf="visible">
+  <div class="event-view-modal">
+
+    <div *ngIf="compareDates(event?.start, event?.end); else multiDia">
+        <div class="event-view-modal__close" (click)="closeModal()">
+             <h3 class="event-view-modal__close-text"><strong>x</strong></h3>
+        </div>
+      <div class="event-view-modal__dados-box">
+        <h5 class="event-view-modal__text"><strong>Título:</strong> {{ event?.title }}</h5>
+        <h5 class="event-view-modal__text"><strong>Data:</strong> {{ event?.start | date:'dd/MM/yyyy' }}</h5>
+        <h5 class="event-view-modal__text"><strong>Duração:</strong>
+            {{ event?.start | date:'HH:mm' }} - {{ event?.end | date:'HH:mm' }}
+        </h5>
+         <h5 class="event-view-modal__text"><strong>Autor:  Nome do autor</strong></h5>
+      </div>
+    </div>
+
+    <ng-template #multiDia>
+        <div class="event-view-modal__close" (click)="closeModal()">
+             <h3 class="event-view-modal__close-text"><strong>x</strong></h3>
+        </div>
+      <div class="event-view-modal__dados-box">
+        <h5 class="event-view-modal__text"><strong>Título:</strong> {{ event?.title }}</h5>
+        <h5 class="event-view-modal__text"><strong>Início:</strong> {{ event?.start | date:'dd/MM/yyyy HH:mm' }}</h5>
+        <h5 *ngIf="event?.end"><strong>Fim:</strong> {{ event?.end | date:'dd/MM/yyyy HH:mm' }}</h5>
+        <h5 class="event-view-modal__text"><strong>Autor:  Nome do autor</strong></h5>
+     </div> 
+    </ng-template>
+
+    <div class="event-view-modal__actions">
+      <button class="btn-edit" (click)="openEdit()">Editar</button>
+      <div class="event-view-modal__buttons2">
+      <button class="btn-cancel">Adiar</button>
+      <button class="btn-delete">Excluir Evento</button>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<div class="event-view-modal__overlay" *ngIf="editVisible">
+            <div class="event-view-modal__edit">
+                <div class="event-view-modal__edit-title">
+                    <h3 class="event-view-modal__text">Editar Evento</h3>
+                </div>
+
+                <h5 class="event-view-modal__text">Título</h5>
+                <input type="text" [(ngModel)]="newEvent.title">
+               
+                <h5 class="event-view-modal__text">Data de Início</h5>
+                <input type="date" [(ngModel)]="newEvent.startDate">
+                
+                <h5 class="event-view-modal__text">Data de Fim</h5>
+                <input type="date" [(ngModel)]="newEvent.endDate">
+
+                <h5 class="event-view-modal__text">Hora de Início</h5>
+                <input type="time" [(ngModel)]="newEvent.startTime">
+
+                <h5 class="event-view-modal__text">Hora de Fim</h5>
+                <input type="time" [(ngModel)]="newEvent.endTime">
+
+                <div class="event-view-modal__edit-actions">
+                    <button class="btn-cancel" (click)="cancelEdit()">Cancelar</button>
+                    <button class="btn-save">Editar</button>
+                </div>
+            </div>
+</div>

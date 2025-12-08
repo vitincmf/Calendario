@@ -1,0 +1,14 @@
+* {
+    color: white;
+}
+
+header {
+    background-color: #1A1A1A;
+    height: 100px;
+    border-bottom: 1px solid #323232;
+}
+
+#nav-buttons {
+    margin-left: 200px;
+}
+

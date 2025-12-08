@@ -1,0 +1,195 @@
+
+.btn-add-event {
+  padding: 10px 20px;
+  background: #0B1EFE;
+  color: white;
+  border-radius: 5px;
+  border: none;
+  cursor: pointer;
+  margin-bottom: 15px;
+}
+
+.event-view-modal__overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 1000;
+  width: 100%;
+  height: 100%;
+  background: rgba(0,0,0,0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.event-view-modal{
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background: white;
+  padding: 25px;
+  padding-left: 1.5rem;
+  padding-right: 1.5rem;
+  border-radius: 20px;
+  width: 40%;
+  max-width: 30vw;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+.event-view-modal__close{
+    position: fixed;
+    top: 0.1rem;
+    right: 0.8rem;
+    cursor: pointer;
+}
+.event-view-modal__close-text{
+    color: #141e88;
+}
+.event-view-modal__dados-box{
+    display: flex;
+    flex-direction: column;
+    justify-content: start;
+    background: #96b3f1;
+    border-radius: 30px;
+    border: 5px solid #3b76f5; 
+    padding: 1rem;
+    gap: 5px;
+    box-sizing: border-box;
+}
+
+.event-view-modal__input {
+  padding: 8px;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+}
+.event-view-modal__title{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.event-view-modal__text{
+   color: black;
+  
+}
+.event-view-modal__section{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.event-view-modal__item{
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 1rem;
+}
+.event-view-modal__actions {
+  display: flex;
+  justify-content: space-between;
+  margin-top: auto; 
+  gap: 1rem;
+
+}
+.event-view-modal__buttons2{
+    display: flex;
+    gap: 1rem;
+}
+
+.btn-cancel {
+  background: #3b76f5;
+  color: white;
+  padding: 8px 15px;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+}
+.btn-edit {
+  background: #0B1EFE;
+  color: white;
+  padding: 8px 15px;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+}
+.btn-delete {
+  background: #141e88;
+  color: white;
+  padding: 8px 15px;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+}
+
+.btn-save {
+  background: #0B1EFE;
+  color: white;
+  padding: 8px 15px;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+}
+
+/*edit modal*/
+
+.event-view-modal__edit{
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background: white;
+  padding: 25px;
+  border-radius: 10px;
+  width: 40%;
+  height: 68%;
+  max-width: 30vw;
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+.event-view-modal__edit-close{
+    position: fixed;
+    top: 0.5rem;
+    right: 1rem;
+    cursor: pointer;
+}
+
+.event-view-modal__edit-input {
+  padding: 8px;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+}
+.event-view-modal__edit-title{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.event-view-modal__edit-text{
+   color: black;
+  
+}
+.event-view-modal__edit-section{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.event-view-modal__edit-item{
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 1rem;
+}
+.event-view-modal__edit-actions {
+  display: flex;
+  justify-content: space-between;
+  margin-top: auto; 
+  gap: 1rem;
+
+}
+.event-view-modal__edit input {
+  padding: 8px;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+}

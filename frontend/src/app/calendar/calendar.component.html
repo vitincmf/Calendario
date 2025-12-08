@@ -1,0 +1,43 @@
+<div class="calendar-page">
+    <div class="calendar-itens">
+        <div class="calendar-header">
+            <button class="btn-add-event" (click)="openModal()">Criar Evento</button>
+        </div>
+
+
+        <!-- Modal criar evento -->
+        <div class="modal-overlay" *ngIf="showModal">
+            <div class="modal">
+                <div class="modal-title">
+                    <h3 class="modal-text">Novo Evento</h3>
+                </div>
+
+                <h5 class="modal-text">Título</h5>
+                <input type="text" [(ngModel)]="newEvent.title">
+
+                <h5 class="modal-text">Data de Início</h5>
+                <input type="date" [(ngModel)]="newEvent.startDate">
+
+                <h5 class="modal-text">Data de Fim</h5>
+                <input type="date" [(ngModel)]="newEvent.endDate">
+
+                <h5 class="modal-text">Hora de Início</h5>
+                <input type="time" [(ngModel)]="newEvent.startTime">
+
+                <h5 class="modal-text">Hora de Fim</h5>
+                <input type="time" [(ngModel)]="newEvent.endTime">
+
+                <div class="modal-actions">
+                    <button class="btn-cancel" (click)="closeModal()">Cancelar</button>
+                    <button class="btn-save" (click)="saveEvent()">Criar</button>
+                </div>
+            </div>
+        </div>
+        <app-event-view [event]="selectedEvent" [visible]="showViewModal" (close)="showViewModal = false"
+            (edit)="openEditModal($event)">
+        </app-event-view>
+        <div class="calendar-main">
+            <full-calendar #fullcalendar [options]="calendarOptions" [events]="eventsArray"></full-calendar>
+        </div>
+    </div>
+</div>
