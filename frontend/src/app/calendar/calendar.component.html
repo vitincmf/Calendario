@@ -27,6 +27,11 @@
                 <h5 class="modal-text">Hora de Fim</h5>
                 <input type="time" [(ngModel)]="newEvent.endTime">
 
+                <div style="margin-top: 15px; display: flex; align-items: center; gap: 8px;">
+                    <input type="checkbox" [(ngModel)]="newEvent.publico" id="publico-checkbox" style="width: 18px; height: 18px; cursor: pointer;">
+                    <label for="publico-checkbox" style="cursor: pointer; margin: 0;">Evento Público (outros usuários podem ver)</label>
+                </div>
+
                 <div class="modal-actions">
                     <button class="btn-cancel" (click)="closeModal()">Cancelar</button>
                     <button class="btn-save" (click)="saveEvent()">Criar</button>

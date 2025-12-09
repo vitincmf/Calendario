@@ -36,12 +36,14 @@ export class CalendarComponent implements OnInit {
     startTime: string;
     endDate?: string;
     endTime?: string;
+    publico: boolean;
   } = {
       title: '',
       startDate: '',
       startTime: '',
       endDate: '',
-      endTime: ''
+      endTime: '',
+      publico: false
     };
 
   compareDates(d1: Date | string | null, d2: Date | string | null): boolean {
@@ -108,12 +110,7 @@ export class CalendarComponent implements OnInit {
     }
     localStorage.setItem('highContrast', String(state));
   }
-  eventsArray: EventInput[] = [
-    { title: 'Aula de APS', start: '2025-11-27T08:00:00', end: '2025-11-27T12:00:00' },
-    { title: 'Evento rápido', start: '2025-12-05T09:30:00' }, // sem end = duração padrão (depende)
-    { title: 'Dia inteiro', start: '2025-12-10', allDay: true }, // all-day
-    { title: 'Aula de matematica', start: '2025-12-03T08:00:00', end: '2025-12-03T09:00:00' }
-  ];
+  eventsArray: EventInput[] = [];
 
 
   // Tipando como 'any' para evitar erro
@@ -196,17 +193,18 @@ export class CalendarComponent implements OnInit {
         const year = date.getFullYear();
         header.textContent = `${month} de ${year}`; // sobrescreve corretamente
       }
-    }, eventClick: (arg: any) => {
+    },
+    eventClick: (arg: any) => {
       this.selectedEvent = {
+        id: arg.event.id,
         title: arg.event.title,
         start: arg.event.start,
-        end: arg.event.end
+        end: arg.event.end,
+        canEdit: arg.event.extendedProps?.proprietarioId === this.usuarioLogado?.id,
+        publico: arg.event.extendedProps?.publico
       };
-      this.showViewModal = true; // agora ele abre o EventViewComponent
+      this.showViewModal = true; // abre modal de visualização
     }
-
-
-
   };
 
   addEvent() {
@@ -227,7 +225,8 @@ export class CalendarComponent implements OnInit {
       startDate: '',
       startTime: '',
       endDate: '',
-      endTime: ''
+      endTime: '',
+      publico: false
     };
   }
   openEditModal(event: any) {
@@ -240,7 +239,8 @@ export class CalendarComponent implements OnInit {
       startDate: event.start ? event.start.toISOString().substring(0, 10) : '',
       endDate: event.end ? event.end.toISOString().substring(0, 10) : '',
       startTime: event.start ? event.start.toTimeString().substring(0, 5) : '',
-      endTime: event.end ? event.end.toTimeString().substring(0, 5) : ''
+      endTime: event.end ? event.end.toTimeString().substring(0, 5) : '',
+      publico: event.publico || false
     };
   }
 
@@ -248,17 +248,33 @@ export class CalendarComponent implements OnInit {
     this.showModal = false;
   }
 
-  // Carrega eventos do banco de dados
+  // Carrega eventos do banco de dados para o usuário logado + eventos públicos
   loadEventosFromDatabase() {
-    this.eventoService.getEventos().subscribe(
+    if (!this.usuarioLogado || !this.usuarioLogado.id) {
+      console.error('Usuário não autenticado ou sem ID');
+      return;
+    }
+
+    // Carrega eventos do usuário + eventos públicos
+    this.eventoService.getEventosPorUsuario(this.usuarioLogado.id).subscribe(
       (eventos: any[]) => {
-        this.eventsArray = eventos.map(e => ({
-          title: e.titulo,
-          start: e.dataInicio,
-          end: e.dataFim || undefined
-        }));
+        console.log('Eventos carregados:', eventos);
+        this.eventsArray = eventos.map(e => {
+          const tagTurma = e.turma ? ` [${e.turma.nome}]` : '';
+          return {
+            id: e.id,
+            title: `${e.titulo}${tagTurma}`,
+            start: e.dataInicio,
+            end: e.dataFim || undefined,
+            extendedProps: {
+              publico: e.publico,
+              proprietarioId: e.proprietarioId || e.usuarioId || null,
+              marcadores: e.marcadores || []
+            }
+          };
+        });
       },
-      (error) => {
+      (error: any) => {
         console.error('Erro ao carregar eventos:', error);
       }
     );
@@ -302,8 +318,8 @@ export class CalendarComponent implements OnInit {
         dataInicio: start,
         dataFim: end,
         descricao: '',
-        publico: false,
-        turmaId: 1  // Você pode ajustar isso conforme necessário
+        publico: this.newEvent.publico,
+        turmaId: null
       };
 
       // Salva no banco de dados
@@ -335,7 +351,7 @@ export class CalendarComponent implements OnInit {
             end: eventoSalvo.dataFim
           });
         },
-        (error) => {
+        (error: any) => {
           console.error('Erro ao salvar evento:', error);
           alert('Erro ao salvar evento no banco de dados');
         }

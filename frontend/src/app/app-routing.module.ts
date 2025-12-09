@@ -4,6 +4,7 @@ import { LoginComponent } from './login/login.component';
 import { RegisterComponent } from './register/register.component';
 import { LayoutPrincipalComponent } from './layout/layout-principal/layout-principal.component';
 import { CalendarComponent } from './calendar/calendar.component';
+import { TurmasComponent } from './turmas/turmas.component';
 //import { pathToFileURL } from 'url';
 
 const routes: Routes = [
@@ -13,6 +14,7 @@ const routes: Routes = [
   {path: 'main', component: LayoutPrincipalComponent, children: [
     {path: '', redirectTo: 'calendar', pathMatch: 'full'},
     { path: 'calendar', component: CalendarComponent },
+    { path: 'turmas', component: TurmasComponent },
   ]},
 ];
 

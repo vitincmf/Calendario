@@ -81,7 +81,8 @@ router.delete('/usuarios/:id', async (req, res) => {
 // ===== ROTAS DE TURMAS =====
 router.get('/turmas', async (req, res) => {
   try {
-    const turmas = await TurmaController.listTurmas();
+    const { usuarioId } = req.query;
+    const turmas = await TurmaController.listTurmasVisiveis(usuarioId);
     res.json(turmas);
   } catch (error) {
     res.status(500).json({ error: error.message });
@@ -124,10 +125,33 @@ router.delete('/turmas/:id', async (req, res) => {
   }
 });
 
+// Entrar em uma turma pública ou na qual foi convidado
+router.post('/turmas/:id/participar', async (req, res) => {
+  try {
+    const { usuarioId } = req.body;
+    if (!usuarioId) return res.status(400).json({ error: 'usuarioId é obrigatório' });
+
+    const turma = await TurmaController.adicionarUsuario(req.params.id, usuarioId);
+    res.json(turma);
+  } catch (error) {
+    res.status(400).json({ error: error.message });
+  }
+});
+
 // ===== ROTAS DE EVENTOS =====
 router.get('/eventos', async (req, res) => {
   try {
-    const eventos = await EventoController.listEventos();
+    const { usuarioId } = req.query;
+    let eventos;
+    
+    if (usuarioId) {
+      // Se passou usuarioId, retorna apenas eventos desse usuário
+      eventos = await EventoController.listEventosPorUsuario(usuarioId);
+    } else {
+      // Senão, retorna todos os eventos
+      eventos = await EventoController.listEventos();
+    }
+    
     res.json(eventos);
   } catch (error) {
     res.status(500).json({ error: error.message });
@@ -137,6 +161,16 @@ router.get('/eventos', async (req, res) => {
 router.post('/eventos', async (req, res) => {
   try {
     const evento = await EventoController.createEvento(req.body);
+    res.status(201).json(evento);
+  } catch (error) {
+    res.status(400).json({ error: error.message });
+  }
+});
+
+// Evento institucional de turma (associa todos os membros da turma ao evento)
+router.post('/eventos/turma', async (req, res) => {
+  try {
+    const evento = await EventoController.createEventoTurma(req.body);
     res.status(201).json(evento);
   } catch (error) {
     res.status(400).json({ error: error.message });
@@ -154,8 +188,29 @@ router.get('/eventos/:id', async (req, res) => {
 
 router.put('/eventos/:id', async (req, res) => {
   try {
-    const evento = await EventoController.updateEvento(req.params.id, req.body);
-    res.json(evento);
+    const { usuarioId } = req.body;
+    
+    // Busca o evento para verificar permissão
+    const { Evento, EventoUsuario } = require('../models');
+    const evento = await Evento.findByPk(req.params.id);
+    
+    if (!evento) {
+      return res.status(404).json({ error: 'Evento não encontrado' });
+    }
+    
+    // Verifica se o usuário é o criador do evento
+    if (usuarioId) {
+      const ehProprietario = await EventoUsuario.findOne({
+        where: { eventoId: evento.id, usuarioId }
+      });
+      
+      if (!ehProprietario) {
+        return res.status(403).json({ error: 'Você não tem permissão para editar este evento' });
+      }
+    }
+    
+    const eventoAtualizado = await EventoController.updateEvento(req.params.id, req.body);
+    res.json(eventoAtualizado);
   } catch (error) {
     res.status(400).json({ error: error.message });
   }
@@ -163,10 +218,31 @@ router.put('/eventos/:id', async (req, res) => {
 
 router.delete('/eventos/:id', async (req, res) => {
   try {
+    const { usuarioId } = req.body;
+    
+    // Busca o evento para verificar permissão
+    const { Evento, EventoUsuario } = require('../models');
+    const evento = await Evento.findByPk(req.params.id);
+    
+    if (!evento) {
+      return res.status(404).json({ error: 'Evento não encontrado' });
+    }
+    
+    // Verifica se o usuário é o criador do evento
+    if (usuarioId) {
+      const ehProprietario = await EventoUsuario.findOne({
+        where: { eventoId: evento.id, usuarioId }
+      });
+      
+      if (!ehProprietario) {
+        return res.status(403).json({ error: 'Você não tem permissão para deletar este evento' });
+      }
+    }
+    
     await EventoController.deleteEvento(req.params.id);
     res.status(204).send();
   } catch (error) {
-    res.status(404).json({ error: error.message });
+    res.status(400).json({ error: error.message });
   }
 });
 

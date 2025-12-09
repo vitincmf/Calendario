@@ -1,0 +1,117 @@
+<div class="turmas-page">
+  <div class="form-card">
+    <h2>Criar turma</h2>
+
+    <label>Nome</label>
+    <input type="text" [(ngModel)]="novaTurma.nome" placeholder="Nome da turma">
+
+    <label>Descrição</label>
+    <textarea [(ngModel)]="novaTurma.descricao" rows="2" placeholder="Sobre a turma"></textarea>
+
+    <label>Tipo</label>
+    <input type="text" [(ngModel)]="novaTurma.tipo" placeholder="Ex: classe, grupo de estudo">
+
+    <div class="checkbox-line">
+      <input type="checkbox" id="publico" [(ngModel)]="novaTurma.publico">
+      <label for="publico">Turma pública (aparece na aba de todos)</label>
+    </div>
+
+    <label>Administrador</label>
+    <select [(ngModel)]="novaTurma.administradorId">
+      <option *ngFor="let u of usuarios" [value]="u.id">{{ u.nome || u.email }}</option>
+    </select>
+
+    <div class="usuarios-list">
+      <div class="usuarios-header">
+        <strong>Usuários</strong>
+        <span class="hint">Selecione quem participará</span>
+      </div>
+      <div class="usuario-item" *ngFor="let u of usuarios">
+        <label>
+          <input type="checkbox" [checked]="ehSelecionado(u.id)" (change)="toggleUsuario(u.id)">
+          <span>{{ u.nome || u.email }}</span>
+        </label>
+      </div>
+    </div>
+
+    <button class="btn-primary" (click)="criarTurma()" [disabled]="criando">
+      {{ criando ? 'Criando...' : 'Criar turma' }}
+    </button>
+  </div>
+
+  <div class="lists">
+    <section class="evento-card">
+      <div class="section-title">
+        <h3>Criar evento da turma</h3>
+      </div>
+
+      <label>Turma</label>
+      <select [(ngModel)]="novoEventoTurma.turmaId">
+        <option *ngFor="let t of minhasTurmas" [value]="t.id">{{ t.nome }}</option>
+      </select>
+
+      <label>Título</label>
+      <input type="text" [(ngModel)]="novoEventoTurma.titulo" placeholder="Título do evento">
+
+      <div class="grid-2">
+        <div>
+          <label>Data</label>
+          <input type="date" [(ngModel)]="novoEventoTurma.data">
+        </div>
+        <div>
+          <label>Hora início</label>
+          <input type="time" [(ngModel)]="novoEventoTurma.horaInicio">
+        </div>
+      </div>
+
+      <div class="grid-2">
+        <div>
+          <label>Hora fim</label>
+          <input type="time" [(ngModel)]="novoEventoTurma.horaFim">
+        </div>
+        <div class="checkbox-line" style="margin-top: 30px;">
+          <input type="checkbox" id="evento-publico" [(ngModel)]="novoEventoTurma.publico">
+          <label for="evento-publico">Evento público (visível para todos)</label>
+        </div>
+      </div>
+
+      <button class="btn-primary" (click)="criarEventoTurma()" [disabled]="criandoEvento">
+        {{ criandoEvento ? 'Criando...' : 'Criar evento da turma' }}
+      </button>
+    </section>
+
+    <section>
+      <div class="section-title">
+        <h3>Minhas turmas</h3>
+        <span class="badge">{{ minhasTurmas.length }}</span>
+      </div>
+      <div class="turma-card" *ngFor="let t of minhasTurmas">
+        <div>
+          <h4>{{ t.nome }}</h4>
+          <p class="descricao">{{ t.descricao || 'Sem descrição' }}</p>
+          <p class="meta">Admin: {{ t.administrador?.nome || t.administrador?.email || 'N/D' }}</p>
+          <p class="meta">{{ t.publico ? 'Pública' : 'Privada' }}</p>
+        </div>
+      </div>
+      <p *ngIf="minhasTurmas.length === 0" class="empty">Você ainda não participa de turmas.</p>
+    </section>
+
+    <section>
+      <div class="section-title">
+        <h3>Turmas públicas</h3>
+        <span class="badge">{{ turmasPublicas.length }}</span>
+      </div>
+      <div class="turma-card" *ngFor="let t of turmasPublicas">
+        <div class="turma-info">
+          <div>
+            <h4>{{ t.nome }}</h4>
+            <p class="descricao">{{ t.descricao || 'Sem descrição' }}</p>
+          </div>
+          <button class="btn-outline" (click)="participar(t.id)">Participar</button>
+        </div>
+        <p class="meta">Admin: {{ t.administrador?.nome || t.administrador?.email || 'N/D' }}</p>
+      </div>
+      <p *ngIf="turmasPublicas.length === 0" class="empty">Nenhuma turma pública disponível.</p>
+    </section>
+  </div>
+</div>

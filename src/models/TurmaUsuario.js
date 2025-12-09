@@ -5,18 +5,24 @@ const TurmaUsuario = sequelize.define('TurmaUsuario', {
   turmaId: {
     type: DataTypes.INTEGER,
     primaryKey: true,
+    allowNull: false,
     references: {
       model: 'turmas',
       key: 'id'
-    }
+    },
+    onDelete: 'CASCADE',
+    onUpdate: 'CASCADE'
   },
   usuarioId: {
     type: DataTypes.INTEGER,
     primaryKey: true,
+    allowNull: false,
     references: {
       model: 'usuarios',
       key: 'id'
-    }
+    },
+    onDelete: 'CASCADE',
+    onUpdate: 'CASCADE'
   },
   cargo: {
     type: DataTypes.STRING(50),

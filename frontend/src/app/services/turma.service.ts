@@ -11,9 +11,10 @@ export class TurmaService {
 
   constructor(private http: HttpClient) { }
 
-  // Obter todas as turmas
-  getTurmas(): Observable<any[]> {
-    return this.http.get<any[]>(`${this.apiUrl}/turmas`);
+  // Obter turmas visíveis (participa + públicas)
+  getTurmas(usuarioId?: number): Observable<any[]> {
+    const params = usuarioId ? `?usuarioId=${usuarioId}` : '';
+    return this.http.get<any[]>(`${this.apiUrl}/turmas${params}`);
   }
 
   // Obter turma por ID
@@ -34,5 +35,10 @@ export class TurmaService {
   // Deletar turma
   deleteTurma(id: number): Observable<any> {
     return this.http.delete<any>(`${this.apiUrl}/turmas/${id}`);
+  }
+
+  // Entrar em uma turma
+  participar(turmaId: number, usuarioId: number): Observable<any> {
+    return this.http.post<any>(`${this.apiUrl}/turmas/${turmaId}/participar`, { usuarioId });
   }
 }

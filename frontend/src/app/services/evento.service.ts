@@ -16,6 +16,11 @@ export class EventoService {
     return this.http.get<any[]>(`${this.apiUrl}/eventos`);
   }
 
+  // Obter eventos de um usuário específico
+  getEventosPorUsuario(usuarioId: number): Observable<any[]> {
+    return this.http.get<any[]>(`${this.apiUrl}/eventos?usuarioId=${usuarioId}`);
+  }
+
   // Obter evento por ID
   getEvento(id: number): Observable<any> {
     return this.http.get<any>(`${this.apiUrl}/eventos/${id}`);
@@ -24,6 +29,11 @@ export class EventoService {
   // Criar novo evento
   createEvento(evento: any): Observable<any> {
     return this.http.post<any>(`${this.apiUrl}/eventos`, evento);
+  }
+
+  // Criar evento institucional de turma
+  createEventoTurma(evento: any): Observable<any> {
+    return this.http.post<any>(`${this.apiUrl}/eventos/turma`, evento);
   }
 
   // Atualizar evento

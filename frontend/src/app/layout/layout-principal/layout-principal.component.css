@@ -1,14 +1,35 @@
 * {
-    color: white;
+  color: white;
 }
 
 header {
-    background-color: #1A1A1A;
-    height: 100px;
-    border-bottom: 1px solid #323232;
+  background-color: #1A1A1A;
+  min-height: 100px;
+  border-bottom: 1px solid #323232;
+}
+
+#logo img:first-child { margin-right: 8px; }
+
+.main-nav {
+  display: flex;
+  gap: 18px;
+}
+
+.main-nav a {
+  color: #f3f4f6;
+  text-decoration: none;
+  font-weight: 600;
+  padding: 8px 12px;
+  border-radius: 10px;
+  transition: background-color 0.2s ease, color 0.2s ease;
+}
+
+.main-nav a.active,
+.main-nav a:hover {
+  background: #ffffff15;
+  color: #ffffff;
 }
 
 #nav-buttons {
-    margin-left: 200px;
+  margin-left: 0;
 }
-
